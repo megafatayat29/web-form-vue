@@ -1,5 +1,5 @@
 <template>
-  <div class="backdrop" @click.self="closeModal">
+  <div class="backdrop" v-if="showModal" @click.self="closeModal">
     <div class="modal">
       <div class="actions">
         <slot name="details"></slot>
@@ -10,11 +10,22 @@
 
 <script>
 export default {
+  props: ['delay'],
+  data() {
+    return {
+      showModal: false,
+    }
+  },
   methods: {
     closeModal() {
       this.$emit('close')
     }
-  }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showModal = true
+    }, this.delay)    
+  },
 }
 </script>
 

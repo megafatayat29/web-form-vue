@@ -1,6 +1,6 @@
 <template>
   <div v-if="showModal">
-    <Modal @close="toggleModal">
+    <Modal v-if="showModal" @close="toggleModal" :delay="delay">
       <template v-slot:details>
         <h1>Success!</h1>
         <p>Your data has been sent to system ^^</p>
@@ -83,7 +83,7 @@
     </div>
 
     <div class="submit">
-      <button>Register</button>
+      <button :disabled="showModal" >Register</button>
     </div>
   </form>
 </template>
@@ -110,13 +110,15 @@ export default {
       penghasilanSetelahPandemi: '',
       alasan: '',
       terms: false,
-      showModal: false
+      showModal: false,
+      delay: null,
     }
   },
   components: { Modal },
   methods: {
     handleSubmit() {
-      this.showModal = !this.showModal
+      this.delay = 1000 + Math.random() * 1000
+      this.showModal = true
     },
     toggleModal() {
       this.showModal = !this.showModal
@@ -167,6 +169,10 @@ export default {
     margin-top: 20px;
     color: white;
     border-radius: 20px;
+  }
+  button[disabled] {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
   .submit {
     text-align: center;

@@ -20,7 +20,7 @@
     <label>Nama:</label>
     <input type="text" required v-model="nama">
 
-    <!-- <label>NIK:</label>
+    <label>NIK:</label>
     <input type="number" required v-model="nik">
 
     <label>Nomor Kartu Keluarga:</label>
@@ -33,16 +33,14 @@
     <input type="file" required>
 
     <label>Umur:</label>
-    <input type="number" required v-model="umur"> -->
+    <input type="number" required v-model="umur">
 
     <label>Jenis Kelamin:</label>
     <select v-model="jenisKelamin">
-      <!-- <option v-for="item in JenisKelaminEnum" :key="item">{{ item }}</option> -->
-      <option value="0">Laki-laki</option>
-      <option value="1">Perempuan</option>
+      <option v-for="item in JenisKelaminEnum" :key="item">{{ item }}</option>
     </select>
 
-    <!-- <label>Provinsi:</label>
+    <label>Provinsi:</label>
     <select v-model="provinsi">
       <option value="0">Jakarta Selatan</option>
       <option value="1">Jakarta Barat</option>
@@ -82,7 +80,7 @@
     <input type="number" required v-model="penghasilanSetelahPandemi">
 
     <label>Alasan membutuhkan bantuan:</label>
-    <input type="text" required v-model="alasan"> -->
+    <input type="text" required v-model="alasan">
 
     <div class="container">
       <input type="checkbox" v-model="terms" required>
@@ -96,6 +94,7 @@
 </template>
 
 <script>
+import { JenisKelaminEnum } from '@/enums'
 import Modal from './Modal.vue'
 
 export default {
@@ -119,7 +118,8 @@ export default {
       terms: false,
       showModal: false,
       delay: null,
-      isSuccess: false
+      isSuccess: false,
+      JenisKelaminEnum
     }
   },
   components: { Modal },
@@ -134,7 +134,7 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal
     },
-  }
+  },
 }
 </script>
 

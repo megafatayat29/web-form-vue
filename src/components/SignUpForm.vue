@@ -2,9 +2,16 @@
   <div v-if="showModal">
     <Modal v-if="showModal" @close="toggleModal" :delay="delay">
       <template v-slot:details>
-        <h1>Success!</h1>
-        <p>Your data has been sent to system ^^</p>
-        <a href="#">Close</a>
+        <div v-if="isSuccess">
+          <h1>Success!</h1>
+          <p>Your data has been sent to system ^_^</p>
+          <a href="#" @click="toggleModal">Close</a>
+        </div>
+        <div v-else>
+          <h1 style="color: red">Failed!</h1>
+          <p>Your data hasn't been sent to system T_T</p>
+          <a href="#" @click="toggleModal">Close</a>
+        </div>
       </template>
     </Modal>
   </div>
@@ -13,7 +20,7 @@
     <label>Nama:</label>
     <input type="text" required v-model="nama">
 
-    <label>NIK:</label>
+    <!-- <label>NIK:</label>
     <input type="number" required v-model="nik">
 
     <label>Nomor Kartu Keluarga:</label>
@@ -26,7 +33,7 @@
     <input type="file" required>
 
     <label>Umur:</label>
-    <input type="number" required v-model="umur">
+    <input type="number" required v-model="umur"> -->
 
     <label>Jenis Kelamin:</label>
     <select v-model="jenisKelamin">
@@ -35,7 +42,7 @@
       <option value="1">Perempuan</option>
     </select>
 
-    <label>Provinsi:</label>
+    <!-- <label>Provinsi:</label>
     <select v-model="provinsi">
       <option value="0">Jakarta Selatan</option>
       <option value="1">Jakarta Barat</option>
@@ -75,7 +82,7 @@
     <input type="number" required v-model="penghasilanSetelahPandemi">
 
     <label>Alasan membutuhkan bantuan:</label>
-    <input type="text" required v-model="alasan">
+    <input type="text" required v-model="alasan"> -->
 
     <div class="container">
       <input type="checkbox" v-model="terms" required>
@@ -112,12 +119,16 @@ export default {
       terms: false,
       showModal: false,
       delay: null,
+      isSuccess: false
     }
   },
   components: { Modal },
   methods: {
     handleSubmit() {
       this.delay = 1000 + Math.random() * 1000
+      if (this.delay <= 1500) {
+        this.isSuccess = true
+      }
       this.showModal = true
     },
     toggleModal() {

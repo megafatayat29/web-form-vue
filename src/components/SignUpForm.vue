@@ -17,7 +17,7 @@
   </div>
   <form @submit.prevent="handleSubmit">
     <h2>Registrasi Penerima Bantuan Sosial</h2>
-    <label>Nama:</label>
+    <!-- <label>Nama:</label>
     <input type="text" required v-model="nama">
 
     <label>NIK:</label>
@@ -38,30 +38,26 @@
     <label>Jenis Kelamin:</label>
     <select v-model="jenisKelamin">
       <option v-for="item in JenisKelaminEnum" :key="item">{{ item }}</option>
-    </select>
+    </select> -->
 
     <label>Provinsi:</label>
-    <select v-model="provinsi">
-      <option value="0">Jakarta Selatan</option>
-      <option value="1">Jakarta Barat</option>
+    <select v-model="provinsi" @change="onSelectProvince($event)">
+      <option v-for="province in provinces" :key="province" :value="province.id">{{ province.name }}</option>
     </select>
 
     <label>Kab/Kota:</label>
-    <select v-model="kabupaten">
-      <option value="0">Jakarta Selatan</option>
-      <option value="1">Jakarta Barat</option>
+    <select v-model="kabupaten" @change="onSelectRegency($event)">
+      <option v-for="regency in regencies" :key="regency" :value="regency.id">{{ regency.name }}</option>
     </select>
 
     <label>Kecamatan:</label>
-    <select v-model="kecamatan">
-      <option value="0">Jakarta Selatan</option>
-      <option value="1">Jakarta Barat</option>
+    <select v-model="kecamatan" @change="onSelectDistrict($event)">
+      <option v-for="district in districts" :key="district" :value="district.id">{{ district.name }}</option>
     </select>
 
     <label>Kelurahan/Desa:</label>
     <select v-model="kelurahan">
-      <option value="0">Jakarta Selatan</option>
-      <option value="1">Jakarta Barat</option>
+      <option v-for="village in villages" :key="village" :value="village.id">{{ village.name }}</option>
     </select>
 
     <label>Alamat:</label>
@@ -119,7 +115,11 @@ export default {
       showModal: false,
       delay: null,
       isSuccess: false,
-      JenisKelaminEnum
+      JenisKelaminEnum,
+      provinces: [],
+      regencies: [],
+      districts: [],
+      villages: []
     }
   },
   components: { Modal },
@@ -134,7 +134,30 @@ export default {
     toggleModal() {
       this.showModal = !this.showModal
     },
+    onSelectProvince(event) {
+      var idProv = event.target.value
+      fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${idProv}.json`)
+        .then(response => response.json())
+        .then(regencies => this.regencies = regencies);
+    },
+    onSelectRegency(event) {
+      var idKab = event.target.value
+      fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${idKab}.json`)
+        .then(response => response.json())
+        .then(districts => this.districts = districts);
+    },
+    onSelectDistrict(event) {
+      var idKec = event.target.value
+      fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${idKec}.json`)
+        .then(response => response.json())
+        .then(villages => this.villages = villages);
+    }
   },
+  mounted() {
+    fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+      .then(response => response.json())
+      .then((provinces) => this.provinces = provinces);
+  }
 }
 </script>
 

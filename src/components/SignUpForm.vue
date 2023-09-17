@@ -17,14 +17,14 @@
   </div>
   <form @submit.prevent="handleSubmit">
     <h2>Registrasi Penerima Bantuan Sosial</h2>
-    <!-- <label>Nama:</label>
-    <input type="text" required v-model="nama">
+    <label>Nama:</label>
+    <input type="text" required v-model="formInput.nama">
 
     <label>NIK:</label>
-    <input type="number" required v-model="nik">
+    <input type="number" required v-model="formInput.nik">
 
     <label>Nomor Kartu Keluarga:</label>
-    <input type="number" required v-model="noKk">
+    <input type="number" required v-model="formInput.noKk">
 
     <label>Foto KTP:</label>
     <input type="file" required>
@@ -33,50 +33,50 @@
     <input type="file" required>
 
     <label>Umur:</label>
-    <input type="number" required v-model="umur">
+    <input type="number" required v-model="formInput.umur">
 
     <label>Jenis Kelamin:</label>
-    <select v-model="jenisKelamin">
+    <select v-model="formInput.jenisKelamin">
       <option v-for="item in JenisKelaminEnum" :key="item">{{ item }}</option>
-    </select> -->
+    </select>
 
     <label>Provinsi:</label>
-    <select v-model="provinsi" @change="onSelectProvince($event)">
+    <select v-model="formInput.provinsi" @change="onSelectProvince($event)">
       <option v-for="province in provinces" :key="province" :value="province.id">{{ province.name }}</option>
     </select>
 
     <label>Kab/Kota:</label>
-    <select v-model="kabupaten" @change="onSelectRegency($event)">
+    <select v-model="formInput.kabupaten" @change="onSelectRegency($event)">
       <option v-for="regency in regencies" :key="regency" :value="regency.id">{{ regency.name }}</option>
     </select>
 
     <label>Kecamatan:</label>
-    <select v-model="kecamatan" @change="onSelectDistrict($event)">
+    <select v-model="formInput.kecamatan" @change="onSelectDistrict($event)">
       <option v-for="district in districts" :key="district" :value="district.id">{{ district.name }}</option>
     </select>
 
     <label>Kelurahan/Desa:</label>
-    <select v-model="kelurahan">
+    <select v-model="formInput.kelurahan">
       <option v-for="village in villages" :key="village" :value="village.id">{{ village.name }}</option>
     </select>
 
     <label>Alamat:</label>
-    <textarea required v-model="alamat"></textarea>
+    <textarea required v-model="formInput.alamat"></textarea>
 
     <label>RT:</label>
-    <input type="number" required v-model="rt">
+    <input type="number" required v-model="formInput.rt">
 
     <label>RW:</label>
-    <input type="number" required v-model="rw">
+    <input type="number" required v-model="formInput.rw">
 
     <label>Penghasilan sebelum pandemi:</label>
-    <input type="number" required v-model="penghasilanSebelumPandemi">
+    <input type="number" required v-model="formInput.penghasilanSebelumPandemi">
 
     <label>Penghasilan setelah pandemi:</label>
-    <input type="number" required v-model="penghasilanSetelahPandemi">
+    <input type="number" required v-model="formInput.penghasilanSetelahPandemi">
 
     <label>Alasan membutuhkan bantuan:</label>
-    <input type="text" required v-model="alasan">
+    <input type="text" required v-model="formInput.alasan">
 
     <div class="container">
       <input type="checkbox" v-model="terms" required>
@@ -90,27 +90,32 @@
 </template>
 
 <script>
+import { reactive } from "vue";
 import { JenisKelaminEnum } from '@/enums'
 import Modal from './Modal.vue'
+
+const formInput = reactive({
+  nama: '',
+  nik: '',
+  noKk: '',
+  umur: '',
+  jenisKelamin: '',
+  provinsi: '',
+  kabupaten: '',
+  kecamatan: '',
+  kelurahan: '',
+  alamat: '',
+  rt: '',
+  rw: '',
+  penghasilanSebelumPandemi: '',
+  penghasilanSetelahPandemi: '',
+  alasan: '',
+});
 
 export default {
   data() {
     return {
-      nama: '',
-      nik: '',
-      noKk: '',
-      umur: '',
-      jenisKelamin: '',
-      provinsi: '',
-      kabupaten: '',
-      kecamatan: '',
-      kelurahan: '',
-      alamat: '',
-      rt: '',
-      rw: '',
-      penghasilanSebelumPandemi: '',
-      penghasilanSetelahPandemi: '',
-      alasan: '',
+      formInput,
       terms: false,
       showModal: false,
       delay: null,

@@ -17,66 +17,72 @@
   </div>
   <form @submit.prevent="handleSubmit">
     <h2>Registrasi Penerima Bantuan Sosial</h2>
-    <label>Nama:</label>
-    <input type="text" required v-model="formInput.nama">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" v-model="formInput.nama" placeholder="John Doe" required>
 
-    <label>NIK:</label>
-    <input type="number" required v-model="formInput.nik">
+    <label for="nik">NIK:</label>
+    <input type="number" id="nik" v-model="formInput.nik" placeholder="345678912398" required>
 
-    <label>Nomor Kartu Keluarga:</label>
-    <input type="number" required v-model="formInput.noKk">
+    <label for="noKk">Nomor Kartu Keluarga:</label>
+    <input type="number" id="noKk" v-model="formInput.noKk" placeholder="345678912398" required>
 
-    <label>Foto KTP:</label>
-    <input type="file" required>
+    <label for="fotoKtp">Foto KTP:</label>
+    <input type="file" id="noKtp" required>
 
-    <label>Foto Kartu Keluarga:</label>
-    <input type="file" required>
+    <label for="fotoKk">Foto Kartu Keluarga:</label>
+    <input type="file" id="fotoKk" required>
 
-    <label>Umur:</label>
-    <input type="number" required v-model="formInput.umur">
+    <label for="umur">Umur (tahun):</label>
+    <input type="number" id="umur" v-model="formInput.umur" placeholder="25" required>
 
-    <label>Jenis Kelamin:</label>
-    <select v-model="formInput.jenisKelamin">
+    <label for="jenisKelamin">Jenis Kelamin:</label>
+    <select v-model="formInput.jenisKelamin" id="jenisKelamin" required>
       <option v-for="item in JenisKelaminEnum" :key="item">{{ item }}</option>
     </select>
 
-    <label>Provinsi:</label>
-    <select v-model="formInput.provinsi" @change="onSelectProvince($event)">
+    <label for="provinsi">Provinsi:</label>
+    <select v-model="formInput.provinsi" id="provinsi" @change="onSelectProvince($event)" required>
       <option v-for="province in provinces" :key="province" :value="province.id">{{ province.name }}</option>
     </select>
 
-    <label>Kab/Kota:</label>
-    <select v-model="formInput.kabupaten" @change="onSelectRegency($event)">
-      <option v-for="regency in regencies" :key="regency" :value="regency.id">{{ regency.name }}</option>
-    </select>
+    <div v-if="formInput.provinsi !== ''">
+      <label for="kab">Kab/Kota:</label>
+      <select v-model="formInput.kabupaten" id="kab" @change="onSelectRegency($event)" required>
+        <option v-for="regency in regencies" :key="regency" :value="regency.id">{{ regency.name }}</option>
+      </select>
+    </div>
 
-    <label>Kecamatan:</label>
-    <select v-model="formInput.kecamatan" @change="onSelectDistrict($event)">
-      <option v-for="district in districts" :key="district" :value="district.id">{{ district.name }}</option>
-    </select>
+    <div v-if="formInput.kabupaten !== ''">
+      <label for="kec">Kecamatan:</label>
+      <select v-model="formInput.kecamatan" id="kec" @change="onSelectDistrict($event)" required>
+        <option v-for="district in districts" :key="district" :value="district.id">{{ district.name }}</option>
+      </select>
+    </div>
 
-    <label>Kelurahan/Desa:</label>
-    <select v-model="formInput.kelurahan">
-      <option v-for="village in villages" :key="village" :value="village.id">{{ village.name }}</option>
-    </select>
+    <div v-if="formInput.kecamatan !== ''">
+      <label for="kel">Kelurahan/Desa:</label>
+      <select v-model="formInput.kelurahan" id="kel" required>
+        <option v-for="village in villages" :key="village" :value="village.id">{{ village.name }}</option>
+      </select>
+    </div>
 
-    <label>Alamat:</label>
-    <textarea required v-model="formInput.alamat"></textarea>
+    <label for="alamat">Alamat:</label>
+    <textarea required v-model="formInput.alamat" id="alamat" placeholder="Jl Merdeka"></textarea>
 
-    <label>RT:</label>
-    <input type="number" required v-model="formInput.rt">
+    <label for="rt">RT:</label>
+    <input type="number" required v-model="formInput.rt" id="rt" placeholder="04">
 
-    <label>RW:</label>
-    <input type="number" required v-model="formInput.rw">
+    <label for="rw">RW:</label>
+    <input type="number" required v-model="formInput.rw" id="rw" placeholder="04">
 
-    <label>Penghasilan sebelum pandemi:</label>
-    <input type="number" required v-model="formInput.penghasilanSebelumPandemi">
+    <label for="sblmPandemi">Penghasilan sebelum pandemi:</label>
+    <input type="number" required v-model="formInput.penghasilanSebelumPandemi" id="sblmPandemi" placeholder="1.000.000">
 
-    <label>Penghasilan setelah pandemi:</label>
-    <input type="number" required v-model="formInput.penghasilanSetelahPandemi">
+    <label for="stlhPandemi">Penghasilan setelah pandemi:</label>
+    <input type="number" required v-model="formInput.penghasilanSetelahPandemi" id="stlhPandemi" placeholder="1.000.000">
 
-    <label>Alasan membutuhkan bantuan:</label>
-    <input type="text" required v-model="formInput.alasan">
+    <label for="alasan">Alasan membutuhkan bantuan:</label>
+    <input type="text" required v-model="formInput.alasan" id="alasan" placeholder="Jobless">
 
     <div class="container">
       <input type="checkbox" v-model="terms" required>
